@@ -5,12 +5,6 @@
 # aws --profile youriamuser sts get-session-token --duration 3600 \
 # --serial-number arn:aws:iam::012345678901:mfa/user --token-code 012345
 #
-# Once the temp token is obtained, you'll need to feed the following environment
-# variables to the aws-cli:
-#
-# export AWS_ACCESS_KEY_ID='KEY'
-# export AWS_SECRET_ACCESS_KEY='SECRET'
-# export AWS_SESSION_TOKEN='TOKEN'
 
 AWS_CLI=`which aws`
 
