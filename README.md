@@ -11,7 +11,7 @@ The ARN should be the ARN of your MFA device as specified in the AWS console.
 The MFA code is the code your MFA device gives you.
 
 Remember, the env variables set by this script will only persist in that individual terminal session.
-However, the temporary credentials can be found in the set dir within the .token_file, and printed to console.
+However, the temporary credentials can be found in the set dir within the .token_file, and printed to console. You can always use the following command in a new window:   source ~/aws-mfa-script-master/.token_file
 
 ## Installation
 
