@@ -1,8 +1,7 @@
 # aws-mfa-script
-Script to fetch an MFA token for you to use temporary aws access credentials
+Script to fetch an MFA token for you to use temporary aws access credentials.
 
-I got this somewhere on github and made some changes to it to require 
-less parameters and remember my MFA ARN.  
+Tested on MacOS Catalina, should at least also work on Linux devices.
 
 The profile name should be the name of the profile stanza in your 
 `~/.aws/credentials` file as used by the aws-cli.
@@ -11,11 +10,14 @@ The ARN should be the ARN of your MFA device as specified in the AWS console.
 
 The MFA code is the code your MFA device gives you.
 
+Remember, the env variables set by this script will only persist in that individual terminal session.
+However, the temporary credentials can be found in the set dir within the .token_file, and printed to console.
+
 ## Installation
 
- 1. Extract the files to your home directory `~/`
+ 1. Extract the files to your home directory `~/aws-mfa-script-master` (if elsewhere, make sure you change mfa.sh & alias.sh).
  2. Add `source ./alias.sh` to your `~/.bashrc`
- 3. Copy `SAMPLE-mfa.cfg` to `~/mfa.cfg` 
+ 3. Copy `SAMPLE-mfa.cfg` to `~/aws-mfa-script-master/mfa.cfg` 
  4. Add a profile name and MFA ARN for each aws cli profile you wish to use. The key should be the profile name and the value should be the ARN of the MFA to use for that profile.
 
 ## Running the script
