@@ -28,7 +28,7 @@ source ~/aws-mfa-script-master/.token_file
 At a command prompt run the following command.
 
 ```bash
-mfa <mfacode> <optional-aws-profile> <expiration>
+mfa <mfacode> <optional-aws-profile> <optional-expiration-seconds>
 mfa 123789 default 43200
 ```
 
