@@ -36,6 +36,9 @@ unset AWS_ACCESS_KEY_ID
 unset AWS_SECRET_ACCESS_KEY
 unset AWS_SESSION_TOKEN
 
+EXPIRATION=${3:-129600}
+EXPIRATION_DATE=$(date -v+${EXPIRATION}S)
+
 AWS_CLI_PROFILE=${2:-default}
 MFA_TOKEN_CODE=$1
 ARN_OF_MFA=$(grep "^$AWS_CLI_PROFILE" ~/aws-mfa-script-master/mfa.cfg | cut -d '=' -f2- | tr -d '"')
@@ -43,8 +46,9 @@ ARN_OF_MFA=$(grep "^$AWS_CLI_PROFILE" ~/aws-mfa-script-master/mfa.cfg | cut -d '
 echo "AWS-CLI Profile: $AWS_CLI_PROFILE"
 echo "MFA ARN: $ARN_OF_MFA"
 echo "MFA Token Code: $MFA_TOKEN_CODE"
+echo "Token expires on: $EXPIRATION_DATE"
 
 echo "Your Temporary Creds:"
-aws --profile $AWS_CLI_PROFILE sts get-session-token --duration 129600 \
+aws --profile $AWS_CLI_PROFILE sts get-session-token --duration $EXPIRATION \
   --serial-number $ARN_OF_MFA --token-code $MFA_TOKEN_CODE --output text \
   | awk '{printf("export AWS_ACCESS_KEY_ID=\"%s\"\nexport AWS_SECRET_ACCESS_KEY=\"%s\"\nexport AWS_SESSION_TOKEN=\"%s\"\nexport AWS_SECURITY_TOKEN=\"%s\"\n",$2,$4,$5,$5)}' | tee ~/aws-mfa-script-master/.token_file
