@@ -19,7 +19,7 @@ source ~/aws-mfa-script-master/.token_file
 ## Installation
 
  1. Extract the files to your home directory `~/aws-mfa-script-master` (if elsewhere, make sure you change mfa.sh & alias.sh).
- 2. Add `source ./alias.sh` to your `~/.bashrc`
+ 2. Add `source ./alias.sh` to your `~/.bashrc` (If you aren't already calling rc in profile, make sure you add to .bash_profile/.zprofile)
  3. Copy `SAMPLE-mfa.cfg` to `~/aws-mfa-script-master/mfa.cfg` 
  4. Add a profile name and MFA ARN for each aws cli profile you wish to use. The key should be the profile name and the value should be the ARN of the MFA to use for that profile.
 
