@@ -1,7 +1,7 @@
 # aws-mfa-script
 Script to fetch an MFA token for you to use temporary aws access credentials.
 
-Tested on MacOS Catalina, should at least also work on Linux devices.
+Tested on MacOS Catalina, should at least also work on Linux devices. Requires oath-toolkit for auto-gen.
 
 The profile name should be the name of the profile stanza in your
 `~/.aws/credentials` file as used by the aws-cli.
