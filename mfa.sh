@@ -6,6 +6,12 @@
 # --serial-number arn:aws:iam::012345678901:mfa/user --token-code 012345
 #
 
+# Leaving this with barebones security leaving the totp code in plaintext on system.
+# Best if encrypted, though remember if not using a local key then will have to enter pass.
+function get_totp() {
+    oathtool --base32 --totp $(< ~/.aws-mfa-code)
+}
+
 AWS_CLI=`which aws`
 
 if [ $? !=  0 ]; then
@@ -19,7 +25,7 @@ fi
 if [[ $# != 1 && $# != 2 && $# != 3 ]]; then
   echo "Usage: $0 <MFA_TOKEN_CODE> <AWS_CLI_PROFILE> <EXPIRATION>"
   echo "Where:"
-  echo "   <MFA_TOKEN_CODE> = Code from virtual MFA device"
+  echo "   <MFA_TOKEN_CODE> = Code from virtual MFA device. Enter 0 for Auto-TOTP."
   echo "   <AWS_CLI_PROFILE> = aws-cli profile usually in $HOME/.aws/config"
   echo "   <EXPIRATION> = Seconds until token expires"
   exit 2
@@ -50,6 +56,12 @@ EXPIRATION_DATE=$(date -v+${EXPIRATION}S)
 AWS_CLI_PROFILE=${2:-default}
 MFA_TOKEN_CODE=$1
 ARN_OF_MFA=$(grep "^$AWS_CLI_PROFILE" ~/aws-mfa-script-master/mfa.cfg | cut -d '=' -f2- | tr -d '"')
+
+# Use totp script if flagged
+if [ $MFA_TOKEN_CODE -eq 0 ]; then
+  echo "Using Auto TOTP"
+  MFA_TOKEN_CODE=$(get_totp)
+fi
 
 echo "AWS-CLI Profile: $AWS_CLI_PROFILE"
 echo "MFA ARN: $ARN_OF_MFA"
