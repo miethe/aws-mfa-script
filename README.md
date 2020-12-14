@@ -9,7 +9,7 @@ The profile name should be the name of the profile stanza in your
 The ARN should be the ARN of your MFA device as specified in the AWS console.
 
 The MFA code is the code your MFA device gives you.
-If you locally save the code used to generate a virtual MFA device, you can use the built-in TOTP generator. Just set the location and necessary decryption measures in mfa.sh.
+If you locally save the code used to generate a virtual MFA device (Not the 6-8 digit code, the actual secret key code), you can use the built-in TOTP generator. Just set the location and necessary decryption measures in mfa.sh.
 
 Remember, the env variables set by this script will only persist in that individual terminal session, unless the token file is set in profile.
 However, the temporary credentials can be found in the set dir within the .token_file, and printed to console. You can always use the following command in a new window:
@@ -21,8 +21,10 @@ source ~/aws-mfa-script-master/.token_file
 
  1. Extract the files to your home directory `~/aws-mfa-script-master` (if elsewhere, make sure you change mfa.sh & alias.sh).
  2. Add `source ./alias.sh` to your `~/.bashrc` (If you aren't already calling rc in profile, make sure you add to .bash_profile/.zprofile)
- 3. Copy `SAMPLE-mfa.cfg` to `~/aws-mfa-script-master/mfa.cfg`
- 4. Add a profile name and MFA ARN for each aws cli profile you wish to use. The key should be the profile name and the value should be the ARN of the MFA to use for that profile.
+ 3. Create an `mfa.cfg` file for your profile and ARN. See `SAMPLE-mfa.cfg` for examples.
+ 4. Add a profile name and MFA ARN to mfa.cfg for each aws cli profile you wish to use. The key should be the profile name and the value should be the ARN of the MFA to use for that profile.
+ 5. Create an AWS CLI access key in IAM. Download the .csv and export to your local credentials dir, such as ~/.aws/credentials. See `aws_creds_example`.
+ 6. Setup MFA in AWS, save the generation code locally if you wish to use auto-TOTP.
 
 ## Running the script
 
